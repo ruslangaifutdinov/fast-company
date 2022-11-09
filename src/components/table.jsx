@@ -24,15 +24,15 @@ const Table = () => {
         <th scope="row">{user.name}</th>
         <td key={user._id}>
           {user.qualities.map((quality) => (
-            <button
+            <span
               key={quality._id}
-              className={`btn m-1 btn-` + quality.color}
+              className={`badge p-2 m-1 bg-` + quality.color}
             >
               {quality.name}
-            </button>
+            </span>
           ))}
         </td>
-        <td key={user.profession.id}>{user.profession.name}</td>
+        <td>{user.profession.name}</td>
         <td>{user.completedMeetings}</td>
         <td>{user.rate}</td>
         <td>
@@ -76,7 +76,7 @@ const Table = () => {
   return (
     <>
       {renderHeader()}
-      {users.length !== 0 ? renderTable() : <></>}
+      {users.length > 0 && renderTable()}
     </>
   );
 };
