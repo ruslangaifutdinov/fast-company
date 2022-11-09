@@ -47,11 +47,8 @@ const Table = () => {
     ));
   };
 
-  return (
-    <>
-      <h1 className={`badge fs-3 bg-` + handleColor()}>
-        {users.length !== 0 ? renderString() : "Никто с тобой не тусанёт"}
-      </h1>
+  const renderTable = () => {
+    return (
       <table className="table align-middle">
         <thead>
           <tr>
@@ -65,6 +62,21 @@ const Table = () => {
         </thead>
         <tbody>{renderUsers()}</tbody>
       </table>
+    );
+  };
+
+  const renderHeader = () => {
+    return (
+      <h1 className={`badge fs-3 bg-` + handleColor()}>
+        {users.length !== 0 ? renderString() : "Никто с тобой не тусанёт"}
+      </h1>
+    );
+  };
+
+  return (
+    <>
+      {renderHeader()}
+      {users.length !== 0 ? renderTable() : <></>}
     </>
   );
 };
