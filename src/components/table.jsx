@@ -4,14 +4,21 @@ import api from "../api";
 const Table = () => {
   const [users, setUsers] = useState(api.users.fetchAll());
 
-  const handleUsersChange = (id) => {
-    setUsers((prevState) => prevState.filter((user) => user !== id));
+  const usrToDelete = (userDelete) => {
+    setUsers((prevState) => prevState.filter((user) => user !== userDelete));
+  };
+
+  const insertRightWord = (length) => {
+    const strings = ["человек", "человека"];
+    const value = Math.abs(length) % 100;
+    const number = value % 10;
+    if ((value > 10 && value < 20) || number === 1) return strings[0];
+    if (number > 1 && number < 5) return strings[1];
+    return strings[0];
   };
 
   const renderString = () => {
-    return users.length > 1 && users.length < 5
-      ? `${users.length} человека тусанёт с тобой`
-      : `${users.length} человек тусанёт с тобой`;
+    return `${users.length} ${insertRightWord(users.length)} тусанёт с тобой`;
   };
 
   const handleColor = () => {
@@ -36,10 +43,7 @@ const Table = () => {
         <td>{user.completedMeetings}</td>
         <td>{user.rate}</td>
         <td>
-          <button
-            className="btn btn-danger"
-            onClick={() => handleUsersChange(user)}
-          >
+          <button className="btn btn-danger" onClick={() => usrToDelete(user)}>
             Delete
           </button>
         </td>
