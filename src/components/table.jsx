@@ -5,7 +5,9 @@ const Table = () => {
   const [users, setUsers] = useState(api.users.fetchAll());
 
   const usrToDelete = (userDelete) => {
-    setUsers((prevState) => prevState.filter((user) => user !== userDelete));
+    setUsers((prevState) =>
+      prevState.filter((user) => user._id !== userDelete)
+    );
   };
 
   const insertRightWord = (length) => {
@@ -43,7 +45,10 @@ const Table = () => {
         <td>{user.completedMeetings}</td>
         <td>{user.rate}</td>
         <td>
-          <button className="btn btn-danger" onClick={() => usrToDelete(user)}>
+          <button
+            className="btn btn-danger"
+            onClick={() => usrToDelete(user._id)}
+          >
             Delete
           </button>
         </td>
