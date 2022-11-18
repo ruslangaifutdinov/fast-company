@@ -1,10 +1,11 @@
 import React from "react";
-import Table from "./table";
+import SearchStatus from "./searchStatus";
+import Users from "./users";
 
 const Container = () => {
   return (
     <div className="container">
-      <Table />
+      <Users />
     </div>
   );
 };
