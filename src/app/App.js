@@ -13,13 +13,10 @@ const App = () => {
   const handleToggleBookmark = (userID) => {
     const bookmarkUsers = users.map((user) => {
       if (user._id === userID) {
-        console.log("init: " + user.bookmark);
         user.bookmark = !user.bookmark;
-        console.log("changed: " + user.bookmark);
-        return user;
-      } else {
         return user;
       }
+      return user;
     });
     setUsers(bookmarkUsers);
   };
