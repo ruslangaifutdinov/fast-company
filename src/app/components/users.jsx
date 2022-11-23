@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { paginate } from "../utils/paginate";
 import Pagination from "./pagination";
 import User from "./user";
+import PropTypes from "prop-types";
 
 const Users = ({ users, ...rest }) => {
     const count = users.length;
@@ -31,12 +32,7 @@ const Users = ({ users, ...rest }) => {
                     </thead>
                     <tbody>
                         {userCrop.map((user) => (
-                            <User
-                                key={user._id}
-                                user={user}
-                                {...user}
-                                {...rest}
-                            />
+                            <User key={user._id} {...rest} {...user} />
                         ))}
                     </tbody>
                 </table>
@@ -49,6 +45,9 @@ const Users = ({ users, ...rest }) => {
             />
         </>
     );
+};
+Users.propTypes = {
+    users: PropTypes.array.isRequired
 };
 
 export default Users;

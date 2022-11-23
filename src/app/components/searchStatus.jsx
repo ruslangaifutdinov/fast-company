@@ -1,8 +1,7 @@
 import React from "react";
+import PropTypes from "prop-types";
 
-const SearchStatus = (props) => {
-    const { numberOfUsers } = props;
-
+const SearchStatus = ({ length }) => {
     const insertRightWord = (length) => {
         const strings = ["человек", "человека"];
         const value = Math.abs(length) % 100;
@@ -13,20 +12,23 @@ const SearchStatus = (props) => {
     };
 
     const renderString = () => {
-        return `${numberOfUsers} ${insertRightWord(
-            numberOfUsers
+        return `${length} ${insertRightWord(
+            length
         )} тусанёт с тобой`;
     };
 
     const handleColor = () => {
-        return numberOfUsers !== 0 ? "primary" : "danger";
+        return length !== 0 ? "primary" : "danger";
     };
 
     return (
         <h1 className={`badge fs-3 bg-` + handleColor()}>
-            {numberOfUsers !== 0 ? renderString() : "Никто с тобой не тусанёт"}
+            {length !== 0 ? renderString() : "Никто с тобой не тусанёт"}
         </h1>
     );
+};
+SearchStatus.propTypes = {
+    length: PropTypes.number.isRequired
 };
 
 export default SearchStatus;
