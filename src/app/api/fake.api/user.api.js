@@ -145,6 +145,7 @@ const users = [
     bookmark: false,
   },
 ];
+
 export function fetchAll() {
   return users;
 }
