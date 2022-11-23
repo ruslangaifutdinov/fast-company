@@ -1,6 +1,6 @@
 import React from "react";
 
-const Qualities = (props) => {
+const Qualitie = (props) => {
     const { qualities } = props;
 
     return (
@@ -17,4 +17,4 @@ const Qualities = (props) => {
     );
 };
 
-export default Qualities;
+export default Qualitie;

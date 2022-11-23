@@ -1,6 +1,6 @@
 import React from "react";
 import Bookmark from "./bookmarks";
-import Qualities from "./quality";
+import Qualitie from "./qualitie";
 
 const User = ({
     _id,
@@ -17,7 +17,7 @@ const User = ({
         <tr key={_id}>
             <th scope="row">{name}</th>
             <td key={_id}>
-                <Qualities qualities={qualities} />
+                <Qualitie qualities={qualities} />
             </td>
             <td>{profession.name}</td>
             <td>{completedMeetings}</td>
