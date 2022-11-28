@@ -8,7 +8,7 @@ import GroupList from "./groupList";
 import SearchStatus from "./searchStatus";
 
 const Users = ({ users, ...rest }) => {
-    const pageSize = 4;
+    const pageSize = 2;
     const [currentPage, setCurrentPage] = useState(1);
     const [professions, setProfessions] = useState();
     const [selectedProf, setSelectedProf] = useState();
@@ -21,6 +21,10 @@ const Users = ({ users, ...rest }) => {
             setProfessions(Object.assign(data));
         });
     }, []);
+
+    useEffect(() => {
+        setCurrentPage(1);
+    }, [selectedProf]);
 
     const handleProfessionSelect = (item) => {
         setSelectedProf(item);
@@ -39,7 +43,7 @@ const Users = ({ users, ...rest }) => {
     return (
         <div className="d-flex">
             {professions && (
-                <div className="d-flex d-column d-shrink-0 p-3">
+                <div className="d-flex flex-column d-shrink-0 p-3">
                     <GroupList
                         selectedItem={selectedProf}
                         items={professions}
@@ -53,7 +57,7 @@ const Users = ({ users, ...rest }) => {
                     </button>
                 </div>
             )}
-            <div className="d-flex d-column">
+            <div className="d-flex flex-column">
                 <SearchStatus length={count} />
                 {count > 0 && (
                     <table className="table align-middle">
