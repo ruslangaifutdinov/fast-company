@@ -9,7 +9,12 @@ const Pagination = ({ itemsCount, pageSize, onPageChange, currentPage }) => {
 
     return (
         <nav>
-            <ul className="pagination">
+            <ul className="pagination justify-content-center pagination-lg">
+                <li className="page-item">
+                    <a className="page-link" href="#" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
                 {pages.map((page) => (
                     <li key={"page_" + page} className="page-item">
                         <button
@@ -23,6 +28,11 @@ const Pagination = ({ itemsCount, pageSize, onPageChange, currentPage }) => {
                         </button>
                     </li>
                 ))}
+                <li className="page-item">
+                    <a className="page-link" href="#" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
             </ul>
         </nav>
     );
