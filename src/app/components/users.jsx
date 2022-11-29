@@ -8,7 +8,7 @@ import GroupList from "./groupList";
 import SearchStatus from "./searchStatus";
 
 const Users = ({ users, ...rest }) => {
-    const pageSize = 2;
+    const pageSize = 4;
     const [currentPage, setCurrentPage] = useState(1);
     const [professions, setProfessions] = useState();
     const [selectedProf, setSelectedProf] = useState();
@@ -18,7 +18,7 @@ const Users = ({ users, ...rest }) => {
 
     useEffect(() => {
         api.professions.fetchAll().then((data) => {
-            setProfessions(Object.assign(data));
+            setProfessions(data);
         });
     }, []);
 
@@ -31,7 +31,7 @@ const Users = ({ users, ...rest }) => {
     };
 
     const filteredUsers = selectedProf
-        ? users.filter((user) => user.profession === selectedProf)
+        ? users.filter((user) => user.profession.name === selectedProf.name)
         : users;
     const count = filteredUsers.length;
     const userCrop = paginate(filteredUsers, currentPage, pageSize);
