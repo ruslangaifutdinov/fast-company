@@ -32,7 +32,7 @@ export const qualities = {
     }
 };
 
-export const users = [
+const users = [
     {
         _id: "67rdca3eeb7f6fgeed471815",
         name: "Джон Дориан",
