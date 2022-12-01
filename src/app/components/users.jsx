@@ -12,6 +12,7 @@ const Users = ({ users, ...rest }) => {
     const [currentPage, setCurrentPage] = useState(1);
     const [professions, setProfessions] = useState();
     const [selectedProf, setSelectedProf] = useState();
+
     const handlePageChange = (pageIndex) => {
         setCurrentPage(pageIndex);
     };
@@ -35,6 +36,10 @@ const Users = ({ users, ...rest }) => {
         : users;
     const count = Object.keys(filteredUsers).length;
     const userCrop = paginate(filteredUsers, currentPage, pageSize);
+
+    useEffect(() => {
+        if (userCrop.length === 0) setCurrentPage((prevIndex) => prevIndex - 1);
+    }, [userCrop.length]);
 
     const clearFilter = () => {
         setSelectedProf();
@@ -92,7 +97,7 @@ const Users = ({ users, ...rest }) => {
     );
 };
 Users.propTypes = {
-    users: PropTypes.oneOfType([PropTypes.object, PropTypes.array])
+    users: PropTypes.oneOfType([PropTypes.object, PropTypes.array]).isRequired
 };
 
 export default Users;
