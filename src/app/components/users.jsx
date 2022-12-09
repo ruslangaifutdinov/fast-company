@@ -6,16 +6,22 @@ import PropTypes from "prop-types";
 import GroupList from "./groupList";
 import SearchStatus from "./searchStatus";
 import UsersTable from "./usersTable";
+import _ from "lodash";
 
-const Users = ({ users, ...rest }) => {
-    const pageSize = 4;
+const Users = () => {
+    const pageSize = 8;
     const [currentPage, setCurrentPage] = useState(1);
     const [professions, setProfessions] = useState();
     const [selectedProf, setSelectedProf] = useState();
+    const [sortBy, setSortBy] = useState({ iter: "name", order: "asc" });
+    const [users, setUsers] = useState();
+    let userCrop = 0;
 
-    const handlePageChange = (pageIndex) => {
-        setCurrentPage(pageIndex);
-    };
+    useEffect(() => {
+        api.users.fetchAll().then((data) => {
+            setUsers(Object.assign(data));
+        });
+    }, []);
 
     useEffect(() => {
         api.professions.fetchAll().then((data) => {
@@ -27,19 +33,48 @@ const Users = ({ users, ...rest }) => {
         setCurrentPage(1);
     }, [selectedProf]);
 
+    useEffect(() => {
+        if (userCrop.length === 0) {
+            setCurrentPage((prevIndex) => prevIndex - 1);
+        }
+    }, [userCrop.length]);
+
+    const handleDelete = (userID) => {
+        setUsers(users.filter((user) => user._id !== userID));
+    };
+
+    const handleToggleBookmark = (userID) => {
+        setUsers(
+            users.map((user) => {
+                if (user._id === userID) {
+                    return { ...user, bookmark: !user.bookmark };
+                }
+                return user;
+            })
+        );
+    };
+
+    const handlePageChange = (pageIndex) => {
+        setCurrentPage(pageIndex);
+    };
+
     const handleProfessionSelect = (item) => {
         setSelectedProf(item);
     };
 
+    const handleSort = (item) => {
+        setSortBy(item);
+    };
+
+    if (!users) return "loading...";
+
     const filteredUsers = selectedProf
         ? users.filter((user) => user.profession.name === selectedProf.name)
         : users;
-    const count = Object.keys(filteredUsers).length;
-    const userCrop = paginate(filteredUsers, currentPage, pageSize);
 
-    useEffect(() => {
-        if (userCrop.length === 0) setCurrentPage((prevIndex) => prevIndex - 1);
-    }, [userCrop.length]);
+    const count = filteredUsers.length;
+    const sortedUsers = _.orderBy(filteredUsers, [sortBy.path], [sortBy.order]);
+    userCrop = paginate(sortedUsers, currentPage, pageSize);
 
     const clearFilter = () => {
         setSelectedProf();
@@ -64,7 +99,15 @@ const Users = ({ users, ...rest }) => {
             )}
             <div className="d-flex flex-column">
                 <SearchStatus length={count} />
-                {count > 0 && <UsersTable users={userCrop} {...rest} />}
+                {count > 0 && (
+                    <UsersTable
+                        users={userCrop}
+                        selectedSort={sortBy}
+                        onSort={handleSort}
+                        onDelete={handleDelete}
+                        onBookmark={handleToggleBookmark}
+                    />
+                )}
                 <div className="d-flex justify-content-center">
                     <Pagination
                         itemsCount={count}
@@ -78,7 +121,7 @@ const Users = ({ users, ...rest }) => {
     );
 };
 Users.propTypes = {
-    users: PropTypes.oneOfType([PropTypes.object, PropTypes.array]).isRequired
+    users: PropTypes.array
 };
 
 export default Users;
