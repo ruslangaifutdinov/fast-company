@@ -13,6 +13,16 @@ const TableHeader = ({ onSort, selectedSort, columns }) => {
         }
     };
 
+    const handleCaret = () => {
+        return selectedSort.order === "asc"
+            ? (
+                <i className="bi bi-caret-up-fill"></i>
+            )
+            : (
+                <i className="bi bi-caret-down-fill"></i>
+            );
+    };
+
     return (
         <thead>
             <tr>
@@ -27,7 +37,7 @@ const TableHeader = ({ onSort, selectedSort, columns }) => {
                         {...{ role: columns[column].path && "button" }}
                         scope="col"
                     >
-                        {columns[column].name}
+                        {columns[column].name} {columns[column].path && columns[column].path === selectedSort.path ? handleCaret() : ""}
                     </th>
                 ))}
             </tr>
