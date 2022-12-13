@@ -9,7 +9,7 @@ import UsersTable from "./usersTable";
 import _ from "lodash";
 
 const Users = () => {
-    const pageSize = 8;
+    const pageSize = 4;
     const [currentPage, setCurrentPage] = useState(1);
     const [professions, setProfessions] = useState();
     const [selectedProf, setSelectedProf] = useState();
@@ -34,10 +34,10 @@ const Users = () => {
     }, [selectedProf]);
 
     useEffect(() => {
-        if (userCrop.length === 0) {
+        if (userCrop.length === 0 && currentPage !== 1) {
             setCurrentPage((prevIndex) => prevIndex - 1);
         }
-    }, [userCrop.length]);
+    }, [userCrop]);
 
     const handleDelete = (userID) => {
         setUsers(users.filter((user) => user._id !== userID));
