@@ -16,6 +16,7 @@ const Users = () => {
     const [sortBy, setSortBy] = useState({ iter: "name", order: "asc" });
     const [users, setUsers] = useState();
     let userCrop = 0;
+    let sortedUsers = {};
 
     useEffect(() => {
         api.users.fetchAll().then((data) => {
@@ -37,7 +38,7 @@ const Users = () => {
         if (userCrop.length === 0 && currentPage !== 1) {
             setCurrentPage((prevIndex) => prevIndex - 1);
         }
-    }, [userCrop]);
+    }, [sortedUsers]);
 
     const handleDelete = (userID) => {
         setUsers(users.filter((user) => user._id !== userID));
@@ -73,7 +74,7 @@ const Users = () => {
         : users;
 
     const count = filteredUsers.length;
-    const sortedUsers = _.orderBy(filteredUsers, [sortBy.path], [sortBy.order]);
+    sortedUsers = _.orderBy(filteredUsers, [sortBy.path], [sortBy.order]);
     userCrop = paginate(sortedUsers, currentPage, pageSize);
 
     const clearFilter = () => {

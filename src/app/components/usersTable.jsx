@@ -9,7 +9,10 @@ const UsersTable = ({ users, onSort, selectedSort, onBookmark, onDelete }) => {
     const columns = {
         name: {
             path: "name",
-            name: "Имя"
+            name: "Имя",
+            component: (user) => (
+                <Link to={`/users/${user._id}`}>{user.name}</Link>
+            )
         },
         qualities: {
             name: "Качества",
