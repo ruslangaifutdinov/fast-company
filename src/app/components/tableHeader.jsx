@@ -6,7 +6,7 @@ const TableHeader = ({ onSort, selectedSort, columns }) => {
         if (selectedSort.path === item) {
             onSort({
                 ...selectedSort,
-                order: selectedSort.order === "asc" ? "desc" : "asc"
+                order: selectedSort.order === "asc" ? "desc" : "asc",
             });
         } else {
             onSort({ path: item, oreder: "asc" });
@@ -14,13 +14,11 @@ const TableHeader = ({ onSort, selectedSort, columns }) => {
     };
 
     const handleCaret = () => {
-        return selectedSort.order === "asc"
-            ? (
-                <i className="bi bi-caret-up-fill"></i>
-            )
-            : (
-                <i className="bi bi-caret-down-fill"></i>
-            );
+        return selectedSort.order === "asc" ? (
+            <i className="bi bi-caret-up-fill"></i>
+        ) : (
+            <i className="bi bi-caret-down-fill"></i>
+        );
     };
 
     return (
@@ -37,7 +35,11 @@ const TableHeader = ({ onSort, selectedSort, columns }) => {
                         {...{ role: columns[column].path && "button" }}
                         scope="col"
                     >
-                        {columns[column].name} {columns[column].path && columns[column].path === selectedSort.path ? handleCaret() : ""}
+                        {columns[column].name}{" "}
+                        {columns[column].path &&
+                        columns[column].path === selectedSort.path
+                            ? handleCaret()
+                            : ""}
                     </th>
                 ))}
             </tr>
@@ -47,7 +49,7 @@ const TableHeader = ({ onSort, selectedSort, columns }) => {
 TableHeader.propTypes = {
     onSort: PropTypes.func.isRequired,
     selectedSort: PropTypes.object.isRequired,
-    columns: PropTypes.object.isRequired
+    columns: PropTypes.object.isRequired,
 };
 
 export default TableHeader;
