@@ -1,7 +1,8 @@
-import React from "react";
-import LoginForm from "../components/loginForm";
+import React, { useEffect, useState } from "react";
+import { validator } from "../utils/validator";
+import TextField from "./textField";
 
-const Login = () => {
+const LoginForm = () => {
     const [data, setData] = useState({ email: "", password: "" });
     const [errors, setErrors] = useState({});
 
@@ -52,7 +53,6 @@ const Login = () => {
         e.preventDefault();
         const isValidate = validate();
         if (!isValidate) return;
-        console.log(data);
     };
 
     return (
@@ -83,5 +83,5 @@ const Login = () => {
         </div>
     );
 };
-
-export default Login;
+ 
+export default LoginForm;
