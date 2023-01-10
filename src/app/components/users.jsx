@@ -6,8 +6,6 @@ import PropTypes from "prop-types";
 import GroupList from "./groupList";
 import SearchStatus from "./searchStatus";
 import UsersTable from "./usersTable";
-import TextField from "./textField";
-import { searchUser } from "../utils/search";
 import _ from "lodash";
 
 const Users = () => {
@@ -17,7 +15,7 @@ const Users = () => {
     const [selectedProf, setSelectedProf] = useState();
     const [sortBy, setSortBy] = useState({ iter: "name", order: "asc" });
     const [users, setUsers] = useState();
-    const [search, setSearch] = useState("");
+    const [searchQuery, setSearchQuery] = useState("");
     const [filter, setFilter] = useState("");
     let userCrop = 0;
     let sortedUsers = {};
@@ -44,9 +42,9 @@ const Users = () => {
         }
     }, [sortedUsers]);
 
-    const handleSearch = (e) => {
-        setSearch(e.target.value);
-        setFilter("search");
+    const handleSearchQuery = ({ target }) => {
+        setSelectedProf(undefined);
+        setSearchQuery(target.value);
     };
 
     const handleDelete = (userID) => {
@@ -69,10 +67,8 @@ const Users = () => {
     };
 
     const handleProfessionSelect = (item) => {
-        setSearch("");
-        if (currentPage > 1) setCurrentPage(1);
+        if (searchQuery !== "") setSearchQuery("");
         setSelectedProf(item);
-        setFilter("profession");
     };
 
     const handleSort = (item) => {
@@ -81,7 +77,20 @@ const Users = () => {
 
     if (!users) return "loading...";
 
-    const filteredUsers = searchUser(users,filter, search, selectedProf);
+    const filteredUsers = searchQuery
+        ? users.filter(
+            (user) =>
+                user.name
+                    .toLowerCase()
+                    .indexOf(searchQuery.toLowerCase()) !== -1
+        )
+        : selectedProf
+            ? users.filter(
+                (user) =>
+                    JSON.stringify(user.profession) ===
+                    JSON.stringify(selectedProf)
+            )
+            : users;
     const count = filteredUsers.length;
     sortedUsers = _.orderBy(filteredUsers, [sortBy.path], [sortBy.order]);
     userCrop = paginate(sortedUsers, currentPage, pageSize);
@@ -109,12 +118,18 @@ const Users = () => {
             )}
             <div className="d-flex flex-column">
                 <SearchStatus length={count} />
-                <TextField
-                    type="text"
-                    placeholder="Найти..."
-                    value={search}
-                    onChange={handleSearch}
-                />
+                <>
+                    <div className="input-group mb-1">
+                        <input
+                            type="text"
+                            name="searchQuery"
+                            placeholder="Search..."
+                            onChange={handleSearchQuery}
+                            value={searchQuery}
+                        />
+                    </div>
+                </>
+                
                 {count > 0 && (
                     <UsersTable
                         users={userCrop}

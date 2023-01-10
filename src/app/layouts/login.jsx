@@ -53,7 +53,6 @@ const Login = () => {
         e.preventDefault();
         const isValidate = validate();
         if (!isValidate) return;
-        console.log(data);
     };
 
     return (
