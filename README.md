@@ -1,4 +1,4 @@
-![alt text](https://github.com/ruslangaifutdinov/fast-company/fast-company.png)
+![alt text](https://github.com/ruslangaifutdinov/fast-company/blob/main/image.png)
 
 # Getting Started with Create React App
 
