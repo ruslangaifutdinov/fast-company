@@ -1,9 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
-import Bookmark from "./bookmarks";
-import QualitiesList from "./qualitiesList";
-import Table from "./table";
+import Bookmark from "./common/bookmarks";
+import QualitiesList from "./ui/qualities";
+import Table from "../components/common/table";
 
 const UsersTable = ({ users, onSort, selectedSort, onBookmark, onDelete }) => {
     const columns = {

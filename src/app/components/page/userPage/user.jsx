@@ -1,8 +1,7 @@
 import { React, useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
-import api from "../api/index";
-import QualitiesList from "../components/qualitiesList";
-import Loader from "./loader";
+import api from "../../../api/index";
+import QualitiesList from "../../ui/qualities";
 
 const User = () => {
     const params = useParams();
@@ -54,7 +53,7 @@ const User = () => {
             </div>
         );
     }
-    return <Loader />;
+    return <div>Loading....</div>;
 };
 
 export default User;
