@@ -1,5 +1,5 @@
 import { professionsObject as professions } from "./professions.api";
-export const qualities = {
+const qualities = {
     tedious: {
         _id: "67rdca3eeb7f6fgeed471198",
         name: "Нудила",
@@ -147,7 +147,7 @@ const fetchAll = () =>
     new Promise((resolve) => {
         window.setTimeout(function () {
             resolve(users);
-        }, 1000);
+        }, 2000);
     });
 
 const getById = (id) =>
@@ -156,7 +156,6 @@ const getById = (id) =>
             resolve(users.find((user) => user._id === id));
         }, 1000);
     });
-
 export default {
     fetchAll,
     getById
