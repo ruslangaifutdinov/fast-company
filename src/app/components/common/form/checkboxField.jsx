@@ -3,12 +3,12 @@ import PropTypes from "prop-types";
 import { PromptProps } from "react-router-dom";
 
 const CheckboxField = ({ name, value, onChange, children, error }) => {
-    const handleChange = ({ target }) => {
+    const handleChange = () => {
         onChange({ name: name, value: !value });
     };
 
     const getInputClasses = () => {
-        return "form-check-input " + (error ? "is-invalid" : "");
+        return "form-check-input" + (error ? " is-invalid" : "");
     };
 
     return (

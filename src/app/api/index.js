@@ -4,6 +4,6 @@ import qualities from "./fake.api/qualities.api";
 const API = {
     users,
     professions,
-    qualities,
+    qualities
 };
 export default API;

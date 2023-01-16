@@ -20,13 +20,16 @@ const RegisterForm = () => {
     const [professions, setProfessions] = useState([]);
     const [qualities, setQualities] = useState({});
 
+    const handleChange = (target) => {
+        setData((prevState) => ({
+            ...prevState,
+            [target.name]: target.value,
+        }));
+    };
+
     useEffect(() => {
-        api.professions.fetchAll().then((data) => {
-            setProfessions(data);
-        });
-        api.qualities.fetchAll().then((data) => {
-            setQualities(data);
-        });
+        api.professions.fetchAll().then((data) => setProfessions(data));
+        api.qualities.fetchAll().then((data) => setQualities(data));
     }, []);
 
     const validatorConfig = {
@@ -76,18 +79,11 @@ const RegisterForm = () => {
 
     const isValid = Object.keys(errors).length === 0;
 
-    const handleChange = (target) => {
-        setData((prevState) => ({
-            ...prevState,
-            [target.name]: target.value,
-        }));
-    };
-
     const handleSubmit = (e) => {
         e.preventDefault();
-        const isValidate = validate();
-        console.log(isValidate);
-        if (!isValidate) return;
+        const isValid = validate();
+        if (!isValid) return;
+        console.log(data);
     };
 
     return (
