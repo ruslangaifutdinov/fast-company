@@ -85,6 +85,8 @@ const UserEditPage = () => {
         return Object.keys(errors).length === 0;
     };
 
+    const isValid = Object.keys(errors).length === 0;
+
     useEffect(() => {
         validate();
     }, [data]);
@@ -106,6 +108,8 @@ const UserEditPage = () => {
                 qualities: getQualities(qualities),
             })
             .then((data) => history.push(`/users/${data._id}`));
+        const isValidate = validate();
+        if (!isValidate) return;
     };
 
     if (!isLoading) {
@@ -160,6 +164,7 @@ const UserEditPage = () => {
                                 />
                                 <button
                                     type="submit"
+                                    disabled={!isValid}
                                     className="btn btn-primary w-100 mx-auto"
                                 >
                                     Обновить
