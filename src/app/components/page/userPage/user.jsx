@@ -1,20 +1,21 @@
 import { React, useEffect, useState } from "react";
-import { useHistory, useParams } from "react-router-dom";
-import api from "../../../api/index";
+import PropTypes from "prop-types";
+import { useHistory } from "react-router-dom";
+import api from "../../../api";
 import QualitiesList from "../../ui/qualities";
 
-const User = () => {
-    const params = useParams();
+const User = ({ userId }) => {
     const history = useHistory();
     const [user, setUser] = useState();
 
     useEffect(() => {
-        api.users.getById(params.userId).then((data) => {
+        api.users.getById(userId).then((data) => {
             setUser(data);
         });
     }, []);
 
-    const handleReturns = () => history.replace("/users");
+    const handleEditClick = () =>
+        history.push(history.location.pathname + "/edit");
 
     if (user) {
         return (
@@ -43,9 +44,9 @@ const User = () => {
                             </p>
                             <button
                                 className="btn btn-lg w-100 btn-success"
-                                onClick={() => handleReturns()}
+                                onClick={handleEditClick}
                             >
-                                Вернуться к списку всех пользователей
+                                Изменить
                             </button>
                         </div>
                     </div>
@@ -54,6 +55,9 @@ const User = () => {
         );
     }
     return <div>Loading....</div>;
+};
+User.propTypes = {
+    userId: PropTypes.string,
 };
 
 export default User;
