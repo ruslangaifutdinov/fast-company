@@ -9,7 +9,6 @@ import UsersTable from "../../usersTable";
 import _ from "lodash";
 
 const Users = () => {
-    const pageSize = 4;
     const [currentPage, setCurrentPage] = useState(1);
     const [professions, setProfessions] = useState();
     const [selectedProf, setSelectedProf] = useState();
@@ -17,6 +16,7 @@ const Users = () => {
     const [users, setUsers] = useState();
     const [searchQuery, setSearchQuery] = useState("");
     let userCrop = 0;
+    const pageSize = 4;
     let sortedUsers = {};
 
     useEffect(() => {
@@ -33,7 +33,7 @@ const Users = () => {
 
     useEffect(() => {
         setCurrentPage(1);
-    }, [selectedProf]);
+    }, [selectedProf, searchQuery]);
 
     useEffect(() => {
         if (userCrop.length === 0 && currentPage !== 1) {
@@ -78,18 +78,17 @@ const Users = () => {
 
     const filteredUsers = searchQuery
         ? users.filter(
-            (user) =>
-                user.name
-                    .toLowerCase()
-                    .indexOf(searchQuery.toLowerCase()) !== -1
-        )
+              (user) =>
+                  user.name.toLowerCase().indexOf(searchQuery.toLowerCase()) !==
+                  -1
+          )
         : selectedProf
-            ? users.filter(
-                (user) =>
-                    JSON.stringify(user.profession) ===
-                    JSON.stringify(selectedProf)
-            )
-            : users;
+        ? users.filter(
+              (user) =>
+                  JSON.stringify(user.profession) ===
+                  JSON.stringify(selectedProf)
+          )
+        : users;
     const count = filteredUsers.length;
     sortedUsers = _.orderBy(filteredUsers, [sortBy.path], [sortBy.order]);
     userCrop = paginate(sortedUsers, currentPage, pageSize);
@@ -128,7 +127,7 @@ const Users = () => {
                         />
                     </div>
                 </>
-                
+
                 {count > 0 && (
                     <UsersTable
                         users={userCrop}
