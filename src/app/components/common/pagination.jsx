@@ -6,33 +6,25 @@ const Pagination = ({ itemsCount, pageSize, onPageChange, currentPage }) => {
     const pageCount = Math.ceil(itemsCount / pageSize);
     if (pageCount === 1) return null;
     const pages = _.range(1, pageCount + 1);
-
     return (
         <nav>
-            <ul className="pagination justify-content-center pagination-lg">
-                <li className="page-item">
-                    <a className="page-link" href="#" aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
-                    </a>
-                </li>
+            <ul className="pagination">
                 {pages.map((page) => (
-                    <li key={"page_" + page} className="page-item">
+                    <li
+                        className={
+                            "page-item" +
+                            (page === currentPage ? " active" : "")
+                        }
+                        key={"page_" + page}
+                    >
                         <button
-                            className={
-                                "page-link" +
-                                (page === currentPage ? " active" : "")
-                            }
+                            className="page-link"
                             onClick={() => onPageChange(page)}
                         >
                             {page}
                         </button>
                     </li>
                 ))}
-                <li className="page-item">
-                    <a className="page-link" href="#" aria-label="Next">
-                        <span aria-hidden="true">&raquo;</span>
-                    </a>
-                </li>
             </ul>
         </nav>
     );

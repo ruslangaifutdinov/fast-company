@@ -8,8 +8,8 @@ export function validator(data, config) {
                     statusValidate = !data;
                 } else {
                     statusValidate = data.trim() === "";
-                    break;
                 }
+                break;
             }
             case "isEmail": {
                 const emailRegExp = /^\S+@\S+\.\S+$/g;
@@ -30,13 +30,11 @@ export function validator(data, config) {
                 statusValidate = data.length < config.value;
                 break;
             }
-
             default:
                 break;
         }
         if (statusValidate) return config.message;
     }
-
     for (const fieldName in data) {
         for (const validateMethod in config[fieldName]) {
             const error = validate(

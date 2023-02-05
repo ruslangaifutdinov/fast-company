@@ -1,51 +1,54 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
-import Bookmark from "./common/bookmarks";
-import QualitiesList from "./ui/qualities";
-import Table from "../components/common/table";
 
-const UsersTable = ({ users, onSort, selectedSort, onBookmark, onDelete }) => {
+import BookMark from "../common/bookmark";
+import Qualities from "./qualities";
+import Table from "../common/table";
+import { Link } from "react-router-dom";
+
+const UserTable = ({
+    users,
+    onSort,
+    selectedSort,
+    onToggleBookMark,
+    onDelete,
+    ...rest
+}) => {
     const columns = {
         name: {
             path: "name",
             name: "Имя",
             component: (user) => (
-                <Link
-                    className="text-decoration-none"
-                    to={`/users/${user._id}`}
-                >
-                    {user.name}
-                </Link>
+                <Link to={`/users/${user._id}`}>{user.name}</Link>
             )
         },
         qualities: {
             name: "Качества",
-            component: (user) => <QualitiesList qualities={user.qualities} />
+            component: (user) => <Qualities qualities={user.qualities} />
         },
         professions: { path: "profession.name", name: "Профессия" },
         completedMeetings: {
             path: "completedMeetings",
             name: "Встретился, раз"
         },
-        rate: { path: "rate", name: "Рейтинг" },
+        rate: { path: "rate", name: "Оценка" },
         bookmark: {
             path: "bookmark",
             name: "Избранное",
             component: (user) => (
-                <Bookmark
-                    userStatus={user.bookmark}
-                    onClick={() => onBookmark(user._id)}
+                <BookMark
+                    status={user.bookmark}
+                    onClick={() => onToggleBookMark(user._id)}
                 />
             )
         },
         delete: {
             component: (user) => (
                 <button
-                    className="btn btn-danger"
                     onClick={() => onDelete(user._id)}
+                    className="btn btn-danger"
                 >
-                    Delete
+                    delete
                 </button>
             )
         }
@@ -59,12 +62,13 @@ const UsersTable = ({ users, onSort, selectedSort, onBookmark, onDelete }) => {
         />
     );
 };
-UsersTable.propTypes = {
+
+UserTable.propTypes = {
     users: PropTypes.array.isRequired,
     onSort: PropTypes.func.isRequired,
     selectedSort: PropTypes.object.isRequired,
-    onBookmark: PropTypes.func.isRequired,
+    onToggleBookMark: PropTypes.func.isRequired,
     onDelete: PropTypes.func.isRequired
 };
 
-export default UsersTable;
+export default UserTable;

@@ -5,7 +5,7 @@ import TableHeader from "./tableHeader";
 
 const Table = ({ onSort, selectedSort, columns, data, children }) => {
     return (
-        <table className="table align-middle">
+        <table className="table">
             {children || (
                 <>
                     <TableHeader {...{ onSort, selectedSort, columns }} />
@@ -17,9 +17,9 @@ const Table = ({ onSort, selectedSort, columns, data, children }) => {
 };
 Table.propTypes = {
     onSort: PropTypes.func,
-    selectedSort: PropTypes.object.isRequired,
-    columns: PropTypes.object.isRequired,
-    data: PropTypes.array.isRequired,
+    selectedSort: PropTypes.object,
+    columns: PropTypes.object,
+    data: PropTypes.array,
     children: PropTypes.array
 };
 
